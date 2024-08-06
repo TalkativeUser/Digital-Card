@@ -1,0 +1,36 @@
+
+@media (max-width:360px) {
+    
+    .verifyForm {
+
+        width: 290px!important;
+    }
+
+    .verifyInput {
+
+            width: 2em!important;
+            height: 2em!important;
+            margin: 0.5em!important;
+    }
+}
+@media (max-width:305px) {
+    
+    .verifyForm {
+
+        width: 260px!important;
+    }
+
+    .verifyInput {
+
+            width: 2em!important;
+            height: 2em!important;
+            margin: 0.5em!important;
+    }
+
+
+    .verifyBtn {
+
+        width: 260px!important;
+    }
+}
+

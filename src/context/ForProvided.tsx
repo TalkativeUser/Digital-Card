@@ -1,0 +1,263 @@
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
+
+// شويه حاجات لازم تتعدل بعد ما ارفع المشروع على الجيت او السيرفر الحقيقى  
+
+// الخطوه بتاعة ال text to copy  لازم تتعدل برضه بعد ما ارفع على السيرفر او الجيت 
+// ال value  دى قيمتها هتتغير لما نرفع الكلام ده على سيرفر او على الجيت الكلام ده فى ال QRCodeComponent
+
+
+interface IPropsForProvided {  
+  f_L_token: string | null;
+  setF_L_token: React.Dispatch<React.SetStateAction<string | null>>;
+  inpColorIcon:string;
+  setInpColorIcon:React.Dispatch<React.SetStateAction<string>>;
+  inpColorInnerIcon:string;
+  setInpColorInnerIcon:React.Dispatch<React.SetStateAction<string>>;
+  titleIcon:string;
+  setTitleIcon:React.Dispatch<React.SetStateAction<string>>;
+  backgroundMobile:string;
+  setBackgroundMobile:React.Dispatch<React.SetStateAction<string>>;
+  QRcodeBigScreen:boolean,
+  setQRcodeBigScreen:React.Dispatch<React.SetStateAction<boolean>>;
+  QRcodeSmallScreen:boolean,
+  setQRcodeSmallScreen:React.Dispatch<React.SetStateAction<boolean>>;
+  QRcodeMobileMode:boolean,
+  setQRcodeMobileMode:React.Dispatch<React.SetStateAction<boolean>>;
+  choiesdIcon:string;
+  setChoiesdIcon:React.Dispatch<React.SetStateAction<string>>;
+  profileImage:string|ArrayBuffer|null;
+  setProfileImage:React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>;
+  arrayAllLinks:IpropLink[]|null;
+  setArrayAllLinks:React.Dispatch<React.SetStateAction<IpropLink[]|null>>
+  arrayOfCards:any;
+  setArrayOfCards:React.Dispatch<React.SetStateAction<any>>
+  userData:any;
+  setUserData:React.Dispatch<React.SetStateAction<any>>
+  isUthenticated:boolean;
+  setIsUthenticated:React.Dispatch<React.SetStateAction<boolean>>
+  getAllCards:() => Promise<void>; 
+  handleSaveChangesButton:(values:FormInputsProps,linkUpdatedID:number|undefined) => Promise<void>; 
+  setLOADERforDetailsCard:React.Dispatch<React.SetStateAction<boolean>>
+  LOADERforDetailsCard:boolean;
+  setLayOut:React.Dispatch<React.SetStateAction<boolean>>
+  updateLayOut:boolean;
+  setUpdateLayOut:React.Dispatch<React.SetStateAction<boolean>>
+  layOut:boolean;
+  firstCharInUserName:string;
+  setFirstCharInUserName:React.Dispatch<React.SetStateAction<string>>
+}
+
+interface FormInputsProps {
+  linkTitle: string
+  link: string
+}
+interface IpropLink{
+
+  title:string,
+  link:string,
+  logo:string
+  id?:number
+
+
+}
+
+export const cartContext = createContext<IPropsForProvided | null>(null);
+
+export function ForProvided({ children }: any) {
+
+  const inpBackgroundIcons =localStorage.getItem('inpBackgroundIcons')??'white'
+  const inpIcons =localStorage.getItem('inpIcons')??'black'
+  const inpTitleIcons =localStorage.getItem('inpTitleIcons')??"white"
+  const inpBackgroundMobile =localStorage.getItem('inpBackgroundMobile')??'blue'
+
+
+  const [f_L_token, setF_L_token] = useState<string | null>(null);
+  const [inpColorIcon,setInpColorIcon]=useState(inpBackgroundIcons)
+  const [inpColorInnerIcon,setInpColorInnerIcon]=useState(inpIcons)
+  const [titleIcon,setTitleIcon]=useState(inpTitleIcons)
+  const [backgroundMobile,setBackgroundMobile]=useState(inpBackgroundMobile)
+  const [QRcodeBigScreen,setQRcodeBigScreen]=useState(false)
+  const [QRcodeSmallScreen,setQRcodeSmallScreen]=useState(false)
+  const [QRcodeMobileMode,setQRcodeMobileMode]=useState(false)
+  const [choiesdIcon,setChoiesdIcon]=useState('')
+  const [profileImage, setProfileImage] = useState<string | ArrayBuffer | null>(null);
+  const [arrayAllLinks,setArrayAllLinks]=useState<IpropLink[]|null>(null)
+  const [arrayOfCards,setArrayOfCards]=useState<any> (null)
+  const [userData,setUserData]=useState<any> (null)
+  const [isUthenticated,setIsUthenticated]=useState<boolean> (true)
+  const [LOADERforDetailsCard,setLOADERforDetailsCard]=useState(false)
+  const [firstCharInUserName,setFirstCharInUserName]=useState('')
+  const [layOut,setLayOut]=useState<boolean>(false)
+  const [updateLayOut,setUpdateLayOut]=useState<boolean>(false)
+
+  //  لودر التحميل بيحصله  true and false  فى الكمبوننت اللى انا فيه ده وكمان فى ال  setting dash  عشان وانا بضيف صوره بحتاج اعمل تحميل 
+
+  async function handleSaveChangesButton(values: FormInputsProps,linkUpdatedID:number|undefined) {
+
+    console.log("link Update => " ,linkUpdatedID);
+    
+
+    let link = values.link;
+
+    if (/^\d+$/.test(link)) {
+      if (choiesdIcon === 'fab fa-whatsapp') {
+        link =`https://wa.me/${link}`;
+      }
+    }
+
+    console.log(' disply bearer token for verify ',f_L_token);
+    
+    try {
+
+      if(linkUpdatedID) {
+
+        const response = await axios.post(`https://card.lixir-interiors.com/api/cards-link/${linkUpdatedID}` , {
+          // card_id:arrayOfCards[0].id ,
+          title: values.linkTitle,
+          link:link,
+          logo:choiesdIcon,
+        },
+      
+        {
+          headers: {
+            Authorization: `Bearer ${f_L_token}`, // تأكد من تعريف المتغير token في مكان ما في الكود
+          },
+        }
+      );
+        console.log('Response:', response.data);
+     
+        await getAllCards()
+        console.log('added link successfully ✅');
+  
+      } 
+
+      else {
+
+
+        const response = await axios.post(`https://card.lixir-interiors.com/api/cards-link` , {
+          card_id:arrayOfCards[0].id ,
+          title: values.linkTitle,
+          link:link,
+          logo:choiesdIcon,
+        },
+      
+        {
+          headers: {
+            Authorization: `Bearer ${f_L_token}`, // تأكد من تعريف المتغير token في مكان ما في الكود
+          },
+        }
+      );
+        console.log('Response:', response.data);
+     
+        await getAllCards()
+        console.log('added link successfully ✅');
+  
+      }
+
+     
+
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    setChoiesdIcon('');
+    setLayOut(false);
+    setUpdateLayOut(false)
+  }
+
+  const getAllCards = async () => {
+    setLOADERforDetailsCard(true)
+    try {
+      const response = await axios.get('https://card.lixir-interiors.com/api/my-cards', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`
+        }
+      })
+      
+      setArrayOfCards(response.data.cards)
+      setProfileImage(response.data.cards[0].image)
+      setArrayAllLinks(response.data.cards[0].card_links)
+
+      setFirstCharInUserName(response.data.name.charAt(0))
+      console.log();
+      
+
+      setTimeout(()=>{  setLOADERforDetailsCard(false)},0 )
+
+
+      const { domin_name, name, email } = response.data;
+      setUserData({
+        domin_name,
+        user_name: name,
+        email,
+      
+      });
+
+      console.log('All cards are =>', response.data);
+      console.log('user data => ', response.data.name, response.data.email, response.data.domin_name)
+  localStorage.setItem('yourDomain',`jecard/${response.data.domin_name}`)
+
+    } catch (error) {
+      setTimeout(()=>{  setLOADERforDetailsCard(false)},0 )
+
+      if (axios.isAxiosError(error) && error.response) {
+        console.log('error ==>>', error.response.data.message);
+      } else {
+        console.error('Error>>>>>>>>>>:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchCards = async () => {
+    
+        await getAllCards();
+ 
+  
+    }
+    fetchCards();
+  
+
+  }, []); 
+
+
+  useEffect(() => {
+
+    console.log(choiesdIcon);
+    
+    const storedToken = localStorage.getItem('f_L_token');
+    if (storedToken) {
+      setF_L_token(storedToken);
+      console.log('you are authenticated ');
+      console.log(storedToken);
+      
+      
+    }
+else {
+  console.log('you are not authenticated ');
+  console.log(storedToken);
+
+}
+
+  }, [choiesdIcon]);
+
+  return (
+    <cartContext.Provider value={{ f_L_token,setF_L_token,inpColorIcon,
+                                 setInpColorIcon,inpColorInnerIcon,setInpColorInnerIcon,
+                                 titleIcon,setTitleIcon,backgroundMobile,setBackgroundMobile,
+                                 QRcodeBigScreen,setQRcodeBigScreen,QRcodeSmallScreen,
+                                 setQRcodeSmallScreen,QRcodeMobileMode,setQRcodeMobileMode,
+                                 choiesdIcon,setChoiesdIcon,profileImage,setProfileImage,
+                                 arrayAllLinks,setArrayAllLinks,arrayOfCards,setArrayOfCards,
+                                 userData,setUserData,isUthenticated,setIsUthenticated,getAllCards,
+                                 setLOADERforDetailsCard,LOADERforDetailsCard,firstCharInUserName,
+                                 setFirstCharInUserName,layOut,setLayOut,handleSaveChangesButton,
+                                 setUpdateLayOut,updateLayOut
+
+                                 }}>
+      {children}
+    </cartContext.Provider>
+  );
+}

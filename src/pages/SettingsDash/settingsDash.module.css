@@ -1,0 +1,181 @@
+
+  
+  .uploadInput {
+    display: none;
+  }
+  
+  .uploadLabel {
+    background: linear-gradient(to right, #00d3d3 12%, rgba(50, 184, 50, 0.72));
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .uploadLabel:hover {
+    background: linear-gradient(to right, #00bcbc 12%, rgba(50, 184, 50, 1));
+  }
+  
+  .imageContainer {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+  }
+  
+  .uploadedImage {
+    border: 2px solid #00d3d3;
+    border-radius: 8px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .closeButton:hover {
+    background-color: darkred;
+  }
+
+
+  @media (max-width: 1282px ) {
+
+    .parImageInput {
+
+        width: 60%!important;
+    }
+    
+  }
+  @media (max-width: 850px ) {
+
+    .parImageInput {
+
+        width: 70%!important;
+    }
+    
+  }
+  @media (max-width: 380px ) {
+
+    .parImageInput {
+
+        width: 90%!important;
+    }
+    
+  }
+  @media (max-width: 280px ) {
+
+    .parImageInput {
+
+        width: 97%!important;
+    }
+    
+  }
+  @media (max-width: 263px ) {
+
+    .parImageInput {
+
+        width: 99%!important;
+    }
+    
+  }
+  
+
+@media (max-width : 347px) {
+    
+
+    .userDomain {
+
+font-size: 13px;
+
+    }
+}
+
+@media (max-width : 300px) {
+    
+
+    .userDomain {
+
+font-size: 12px;
+
+    }
+
+    .Imguser {
+
+        width: 40px;
+        height: 40px;
+    }
+
+ 
+
+    .myPageTitle {
+
+        font-size: 15px;
+    }
+}
+
+
+@media (max-width: 440px) {
+
+    .saveChanges , .changePassword , .updateEmail {
+
+        width: 100%;
+    }
+    
+}
+@media (max-width: 340px) {
+
+    .saveChanges , .changePassword , .updateEmail {
+font-size: 14px;
+    }
+    
+}
+@media (max-width: 320px) {
+
+    .saveChanges , .changePassword , .updateEmail {
+font-size: 14px !important;
+    }
+    
+}
+@media (max-width: 300px) {
+
+    .saveChanges , .changePassword , .updateEmail {
+font-size: 12px !important;
+    }
+
+    .account {
+
+        /* background-color: red!important; */
+        padding-inline:9px;
+    }
+    
+}
+
+@media (max-width : 275px) {
+    
+    .deleteAccount {
+
+font-size: 13px;
+    }
+
+
+    .saveChanges , .changePassword , .updateEmail {
+        width:100%!important;
+            }
+}

@@ -1,0 +1,52 @@
+.colorPicker{
+    width: 20px; /* العرض */
+    height: 20px; /* الارتفاع */
+    border-radius: 50%; /* يجعل العنصر دائريًا */
+    border: none; /* إزالة الحدود الافتراضية */
+    padding: 0; /* إزالة الحشوات الافتراضية */
+    cursor: pointer; /* تغيير المؤشر عند التمرير على العنصر */
+    -webkit-appearance: none; /* إزالة الشكل الافتراضي في المتصفح */
+    appearance: none; /* إزالة الشكل الافتراضي في المتصفح */
+    border: 1px solid black;
+  }
+
+  .colorPicker::-webkit-color-swatch-wrapper {
+    padding: 0; /* إزالة الحشوات الداخلية */
+  }
+
+  .colorPicker::-webkit-color-swatch {
+    border: none; /* إزالة الحدود الداخلية */
+    border-radius: 50%; /* التأكد من أن اللون داخل العنصر دائري أيضًا */
+  }
+
+
+
+  @media (max-width : 480px) {
+ 
+    .designDash_h5 {
+
+
+      font-size: 15px;
+    }
+
+    .titleDesignDash {
+
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width : 300px) {
+ 
+    .colorPicker{
+      height: 14px; /* الارتفاع */
+      width: 14px; /* العرض */
+    
+    }
+
+    .designDash_h5 {
+
+
+      font-size: 13px;
+    }
+  
+  }

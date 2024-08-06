@@ -1,0 +1,69 @@
+
+.footerIcons {
+
+
+    margin-inline: 10px;
+}
+
+.GooglePlay {
+
+
+    margin-inline:13px
+}
+
+
+
+@media (max-width:442px) {
+
+    .GooglePlay {
+
+        margin-inline: 0px !important;
+    }
+    
+}
+@media (max-width:377px) {
+
+  .footer {
+
+    width: 100%!important;
+  }
+
+  .googlePlayAppStore {
+
+
+    flex-direction: column!important;
+    align-items: center!important;
+    justify-content: center !important;
+  }
+    
+
+.GooglePlay {
+
+    margin-block: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+ 
+}
+
+.GooglePlay_link {
+
+    width: 80%!important;
+    display: block!important;
+}
+
+}
+
+
+
+
+@media (max-width:306px) {
+
+  
+   .footerIcons {
+
+    font-size: 1.2rem!important;
+   }
+    
+}

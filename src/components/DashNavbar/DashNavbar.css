@@ -1,0 +1,27 @@
+.navlinkDash::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px; /* المسافة بين الخط والنص، يمكنك تعديلها حسب الحاجة */
+    width: 100%;
+    height: 2px;
+    background-color: black; /* يمكنك تغيير اللون حسب الحاجة */
+    transition: background-color 0.3s ease;
+  }
+  
+  .navlinkDash {
+
+    padding-inline : 16px;
+  }
+  .navlinkDash.active::after {
+    background-color: #13c6c6;
+  }
+
+@media (max-width:360px) {
+
+  .navlinkDash {
+
+    padding-inline : 8px;
+  }
+  
+}

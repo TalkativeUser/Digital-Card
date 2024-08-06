@@ -1,0 +1,63 @@
+
+.mobileParent {
+
+
+    /* padding: 16px; */
+}
+
+
+
+.mobileStyles {
+    --sb-track-color: #b1adad;
+    --sb-thumb-color: #00e3f8;
+    --sb-size: 6px;
+    outline: 10px solid black;
+    overflow: hidden;
+
+  }
+  
+  .mobileStyles::-webkit-scrollbar {
+    width: var(--sb-size)
+  }
+  
+  .mobileStyles::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 7px;
+    padding-block: 4px;
+  }
+  
+  .mobileStyles::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 7px;
+    
+  }
+  
+  @supports not selector(::-webkit-scrollbar) {
+    .mobileStyles {
+      scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
+  }
+
+@media (max-width : 360px) {
+
+    .mobileParent {
+
+
+        padding-left: 0px!important;
+        padding-right: 0px!important;
+    }
+
+    
+}
+
+
+@media (max-width : 299px) {
+
+
+  .pleaseAddLink {
+
+    font-size: 13px;
+  }
+  
+}
