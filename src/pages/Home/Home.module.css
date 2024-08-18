@@ -292,3 +292,34 @@ width: 90% !important;
   }
   
   }
+
+
+  /* handling font size in home page in domain input  */
+
+  @media (max-width:322px) {
+
+
+    .inputPart {
+
+font-size: 11px!important;
+
+    }
+    .readonlyPart {
+
+font-size: 13px!important;
+
+    }
+
+
+
+    }
+  @media (max-width:420px) {
+
+
+    .featuresTitle {
+
+      font-size: 22px!important;
+    }
+
+
+    }

@@ -20,7 +20,6 @@ export default function SwiperSlideer(props:any) {
   const height = isSmallScreen ? 430 : 480;
 
   const modifier = props.modifier
-  const rotate = props.rotate
 
   return (
     <>

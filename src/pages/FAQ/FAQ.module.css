@@ -5,3 +5,10 @@
         font-size: 18px;
     }
  }
+ @media (max-width:450px) {
+    
+    .summaryTitle_FAQ {
+
+        font-size: 15px!important;
+    }
+ }

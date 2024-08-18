@@ -16,11 +16,25 @@ color: transparent;
 font-size: 1.2rem;
 font-weight: 500;
 }
+@media (max-width:582px) {
+
+    .parentSlides {
+
+        overflow: hidden!important;
+
+    }
+
+  
+
+
+    
+} 
 @media (max-width:475px) {
 
     .parentSlides {
 
         width: 18.125rem!important;
+
     }
 
     .domainLink {

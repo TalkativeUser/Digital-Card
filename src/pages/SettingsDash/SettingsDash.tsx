@@ -1,11 +1,14 @@
 
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect} from 'react';
 import styles from './settingsDash.module.css'
 import { Link } from 'react-router-dom'
 import { cartContext } from '../../context/ForProvided';
 import axios from 'axios';
 import { ColorRing } from 'react-loader-spinner';
+import defaultImage from '../../../images/add-profile-picture-icon-upload-photo-of-social-media-user-vector.png'
+import 'react-image-crop/dist/ReactCrop.css'
+
 
 export default function SettingsDash(  ) {
 
@@ -19,19 +22,34 @@ export default function SettingsDash(  ) {
       context?.setLOADERforDetailsCard(true)
 
       try {
-        const response = await axios.post(`https://card.lixir-interiors.com/api/cards/${context?.arrayOfCards[0].id}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`, 
-          },
-          
-        }  );
+                if(context?.arrayOfCards.length>0 ) {
+                  await axios.post(`https://card.lixir-interiors.com/api/cards/${context?.arrayOfCards[0].id}`, formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                      'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`, 
+                    },
+                    
+                  }  );
+
+                }
+
+                else {
+
+                  await axios.post(`https://card.lixir-interiors.com/api/cards`, formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                      'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`, 
+                    },
+                    
+                  }  );
+
+
+                }
+     
         context?.setLOADERforDetailsCard(false)
 
        
       context?.getAllCards()
-      console.log('profile image => ',context?.profileImage);
-      console.log('array of cards => ',context?.arrayOfCards);
 
 
       } catch (error) {
@@ -43,7 +61,6 @@ export default function SettingsDash(  ) {
   };
 
   const callRemoveImageMethod = () => {
-    context?.setProfileImage(null);
     removeImage ()
 
   };
@@ -56,15 +73,16 @@ export default function SettingsDash(  ) {
 
     try {
             const response = await axios.post(
-              `https://card.lixir-interiors.com/api/detete-image/17`,null,
+              `https://card.lixir-interiors.com/api/detete-image/${context?.arrayOfCards[0].id} `,null,
               {
                 headers: {
-                  'Authorization': `Bearer 3|9GGCLIS3QMBX7fEh87Mu1TRAzc6Xl9uRjXvXDcvfd637885a`,           }
+                  'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`,           }
               }
             );
 
             console.log('success', response.data);
 
+            context?.getAllCards()
 
     }  
     
@@ -78,7 +96,20 @@ export default function SettingsDash(  ) {
 
 
 
+useEffect(()=>{  
 
+useContext
+
+console.log( "context?.userData.email => ",context?.userData );
+
+if (context?.profileImage) {
+
+  console.log( "context?.profile image => ",context?.profileImage );
+
+}
+
+
+},[])
 
 
 
@@ -100,25 +131,20 @@ export default function SettingsDash(  ) {
                             wrapperStyle={{}}
                             wrapperClass="color-ring-wrapper"
                             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                            /> :   context?.profileImage ? (
-              <div className={styles.imageContainer}>
-                <img src={`https://card.lixir-interiors.com/public/storage/${context?.profileImage as string}`} alt="Uploaded" className={styles.uploadedImage} />
-                <span className={styles.closeButton} onClick={callRemoveImageMethod}><i className="fa-solid fa-xmark"></i></span>
-              </div>
-            ) : (
-              <img className='w-44 h-44' src="../../../images/add-profile-picture-icon-upload-photo-of-social-media-user-vector.png" alt="" />
-            ) }
+                            /> : context?.profileImage && context.profileImage!='add-profile-bigger.jpg' ?<>
 
-
-            {/* {context?.profileImage ? (
-              <div className={styles.imageContainer}>
-                <img src={`https://card.lixir-interiors.com/public/storage/${context?.profileImage as string}`} alt="Uploaded" className={styles.uploadedImage} />
-                <span className={styles.closeButton} onClick={removeImage}><i className="fa-solid fa-xmark"></i></span>
-              </div>
-            ) : (
-              <img className='w-44 h-44' src="../../../images/add-profile-picture-icon-upload-photo-of-social-media-user-vector.png" alt="" />
-            )} */}
-
+                            <div className={styles.imageContainer}>
+                              <img src={`https://card.lixir-interiors.com/public/storage/${context?.profileImage as string}`} alt="Uploaded" className={styles.uploadedImage} />
+                              <span className={styles.closeButton} onClick={callRemoveImageMethod}><i className="fa-solid fa-xmark"></i></span>
+                            </div>
+                    </>:
+                      <div className={styles.imageContainer}>
+                      <img src={defaultImage} alt="Uploaded" className={`w-[180px]`} />
+                    </div>
+                            
+                            
+                            
+                            }
 
 
           </div>
@@ -140,14 +166,19 @@ export default function SettingsDash(  ) {
           </div>
         </div>
         <div className={`${styles.account} bg-white p-8 rounded-lg flex flex-col items-center mt-24`}>
-          <input className={`bg-gray-100 p-3 w-[80%] rounded-lg ${styles.updateEmail}`} readOnly type="email" name="" id="" value={context?.userData.email} />
-          <Link to={'/forgetPass'} className={`py-2 px-6 no-underline mt-4 border-blue-400 border-1 rounded-lg text-blue-400 block w-[80%] ${styles.changePassword}`}>Change Password</Link>
+          <input className={`bg-gray-100 p-3 w-[80%] rounded-lg ${styles.updateEmail}`} readOnly type="email" name="" id="" value={ context?.userData? context?.userData.email:"please again login" } />
+          <Link to={'/forgetPass'} className={`py-2 px-6 no-underline mt-4 border-blue-400 border-1 rounded-lg text-blue-400 hover:bg-blue-400 hover:text-white  block w-[80%] ${styles.changePassword}`}>Change Password</Link>
         </div>
         <div className="dangerZone bg-white p-8 rounded-lg mt-8">
           <h5>Danger Zone</h5>
           <p>Deleting your account permanently deletes your page and all your data</p>
-          <button className={`py-2 px-6 mt-2 border-red-600 border-1 rounded-lg text-red-600 ${styles.deleteAccount}`}>Delete this Account</button>
+          <button className={`py-2 px-6 mt-2 border-red-600 border-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white ${styles.deleteAccount}`} 
+          onClick={context?.deleteAccount}
+          
+          >Delete this Account</button>
         </div>
+
+        {/* <h1> {  context?.profileImage? context?.profileImage as any :""} </h1> */}
       </div>
     </div>
   );

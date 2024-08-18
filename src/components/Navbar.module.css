@@ -36,7 +36,15 @@
     
  
 
-@media (max-width:430px) {
+/* @media (max-width:430px) {
+  .navMenu {
+    padding-block: 0px!important;
+
+  }
+  
+} */
+@media (max-width:640px) {
+ 
   .navMenu {
     padding-block: 0px!important;
 

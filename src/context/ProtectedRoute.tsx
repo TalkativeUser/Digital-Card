@@ -16,7 +16,7 @@ export default function ProtectedRoute({children}:ReactProtectedProps) {
     return <Navigate to='/home' />;
   }
 
-  const { f_L_token: token } = context;
+  // handle sign up routing
 
   if (localStorage.getItem('f_L_token') === null) {
 

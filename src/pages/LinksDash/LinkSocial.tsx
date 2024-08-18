@@ -1,5 +1,4 @@
 
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import styles from './Links.module.css'
 import OverLayIcons from './OverLayIcons';
@@ -23,7 +22,7 @@ interface LinkSocialProps {
 }
 
 
-export default function LinkSocial({detailsOverLay,linkUpdatedID ,linkUpdatedIndex}: LinkSocialProps) {
+export default function LinkSocial({linkUpdatedIndex,linkUpdatedID ,detailsOverLay}: LinkSocialProps) {
   const context = useContext(cartContext);
   const [overLayiconsState, setoverLayiconsState] = useState(false);
  const [iconError,setIconError]=useState('')
@@ -52,25 +51,31 @@ export default function LinkSocial({detailsOverLay,linkUpdatedID ,linkUpdatedInd
     onSubmit: (values) => {
 
 
-    
+
       
-      if (context?.choiesdIcon=="") {  //&&linkUpdatedID==undefined
+      if (context?.choiesdIcon=="") {  
         setIconError('Icon required');
         return;
       }
-      context?.handleSaveChangesButton(values,linkUpdatedID);
+      context?.handleSaveChangesAddButton(values,linkUpdatedID);
     },
   });
 
 
 
-  useEffect(()=>{ 
-
-console.log("linkUpdatedID => ",linkUpdatedID);
-context?.setChoiesdIcon(context.arrayAllLinks&&linkUpdatedIndex?context.arrayAllLinks[linkUpdatedIndex].logo:'fa-solid fa-bug text-red-500 ')
+useEffect(()=>{ 
+  if(context?.arrayAllLinks) {
 
 
-  },[])
+    context.setChoiesdIcon(  linkUpdatedIndex ||linkUpdatedIndex== 0?context.arrayAllLinks[linkUpdatedIndex].logo:'')
+
+    // console.log('arrayAllLinks[linkUpdatedIndex].logo => ', linkUpdatedIndex || linkUpdatedIndex==0?context.arrayAllLinks[linkUpdatedIndex].logo:'not found link update index');
+  }
+
+
+
+
+},[])
 
 
   const buttonStyle = {
@@ -154,7 +159,7 @@ context?.setChoiesdIcon(context.arrayAllLinks&&linkUpdatedIndex?context.arrayAll
                    </div>
                  <p className='m-0 p-1 text-center cursor-pointer hover:text-green-700' >{linkUpdatedIndex !== undefined? 
                     
-                    <><i className={` ${ context?.arrayAllLinks? context?.arrayAllLinks[linkUpdatedIndex].logo:"fa-solid fa-bug text-red-500"} text-5xl`} ></i>
+                    <><i className={` ${ context?.arrayAllLinks? context?.arrayAllLinks[linkUpdatedIndex].logo:""} text-5xl`} ></i>
                   
                   
                   </>:"+ Add icon" }</p>

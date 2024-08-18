@@ -23,6 +23,7 @@ right:0;    top: 100%;
 .mobileMode {
 
     display: none;
+    background-color: #e7e7e7;
 }
 
 
@@ -95,7 +96,10 @@ right:0;    top: 100%;
 @media (max-width:530px) {
     .mobileMode {
 
-        display: block;
+        display: flex;
+        align-items: center!important;
+        justify-content: center;
+        gap: 22px;
     } 
 
     .descTopMode {
@@ -107,6 +111,7 @@ right:0;    top: 100%;
 
 
         padding-block: 0px;
+        height: 60px;
     }
 }
 

@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { cartContext } from '../../context/ForProvided';
+import { Helmet } from 'react-helmet';
 
 interface FormValues {
   email: string;
@@ -45,7 +46,7 @@ export default function Login() {
 
       } catch (error:any) {
         if (axios.isAxiosError(error) && error.response) {
-          setApiError(error.message);
+          setApiError(error.response.data.message);
         } else {
           setApiError(error.message);
         }
@@ -66,6 +67,25 @@ export default function Login() {
 
   return (
     <div className='pt-44' >
+
+ <Helmet>
+
+        <meta charSet="utf-8" />
+        <title>Login - Access Your Account</title>
+
+        {/* وصف الصفحة */}
+        <meta name="description" content="Log in to your account to access personalized content, manage your settings, and stay connected with our community." />
+        
+        {/* كلمات مفتاحية */}
+        <meta name="keywords" content="login, sign in, access account, member login, user authentication" />
+        
+        {/* معلومات إضافية للسيو */}
+        <meta name="author" content="jecard for creating digital card" />
+        <meta name="contact" content="morshedy480@gmail.com" />
+        
+
+ </Helmet>
+
       <form className="form" onSubmit={formik.handleSubmit}>
         <div className="flex-column">
           <label className=''>

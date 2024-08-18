@@ -11,9 +11,11 @@ export default function BusinessCard() {
   const width = isSmallScreen ? 210 : 265;
   const height = isSmallScreen ? 430 : 520;
 
+  
+
   return (
     <div className='flex justify-center items-center vh-100'>
-      <MobileCard width={width} height={height} caseProp={'BusinessCard'}  />
+      <MobileCard width={width} height={height} caseProp={'BusinessCard'}   />
     </div>
   );
 }

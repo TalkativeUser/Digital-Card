@@ -11,7 +11,7 @@
     --sb-track-color: #b1adad;
     --sb-thumb-color: #00e3f8;
     --sb-size: 6px;
-    outline: 10px solid black;
+    border: 4px solid black;
     overflow: hidden;
 
   }
@@ -30,6 +30,12 @@
     background: var(--sb-thumb-color);
     border-radius: 7px;
     
+  }
+
+  .profileImage {
+
+    object-fit: cover;
+    object-position: center;
   }
   
   @supports not selector(::-webkit-scrollbar) {

@@ -5,7 +5,9 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './SignUp.css';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { cartContext } from '../../context/ForProvided';
+import { Helmet } from 'react-helmet';
 
 interface FormValues {
   domin_name: string;
@@ -25,6 +27,7 @@ export default function SignUp() {
   const state = location.state as LocationState;
   const domainName = state?.domainName || '';
   const [isError,setIsError]=useState<string> ()
+  const context =useContext(cartContext)
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -68,16 +71,45 @@ export default function SignUp() {
         localStorage.setItem('yourDomain',`jecard/${values.domin_name}`)
         navigate('/login');
       } catch (error:any) {
-        console.error('Error:', error.message );
-        setIsError(error.message)
+        console.error('Error:', error.response.data.message );
+        setIsError(error.response.data.message)
       } finally {
         setSubmitting(false);
       }
     },
   });
 
-  return (
-    <form className="form mt-36 " onSubmit={formik.handleSubmit}>
+
+  useEffect(() => {
+    if (context?.f_L_token) {
+
+      navigate('/dashboard');
+  
+    }
+  }, [context, navigate]);
+
+  return ( 
+
+
+<> 
+
+        <Helmet>
+
+              <meta charSet="utf-8" />
+              <title>Sign Up</title>
+              {/* وصف الصفحة */}
+              <meta name="description" content="Create your account today and join our community. Sign up to access exclusive features and stay updated with the latest news." />
+              
+              {/* كلمات مفتاحية */}
+              <meta name="keywords" content="sign up, create account, join us, registration, membership" />
+              
+              {/* معلومات إضافية للسيو */}
+              <meta name="author" content=" jecard " />
+              <meta name="contact" content=" morshedy@gmail.com " />
+
+        </Helmet>
+        
+<form className="form mt-36 " onSubmit={formik.handleSubmit}>
       <p className="title">Register</p>
       <p className="message">Signup now and get full access to our app.</p>
 
@@ -190,6 +222,7 @@ export default function SignUp() {
         Already have an account? <Link to={'/login'} className="no-underline text-decoration-none">Login</Link>
       </p>
     </form>
+</>    
   );
 }
 

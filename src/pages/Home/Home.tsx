@@ -1,13 +1,13 @@
 import Creators from '../../components/Creators/Creators';
 import Features from '../../components/Features/Features';
 import styles from './Home.module.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AllCreators from '../../components/AllCreators/AllCreators';
 import Footer from '../../components/Footer/Footer';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 
@@ -95,13 +95,22 @@ const validationSchema = Yup.object({
 });
 
 
+import imgThem_1 from '../../../images/theme-1.png'
+import imgThem_2 from '../../../images/theme-2.png'
+import imgThem_3 from '../../../images/theme-3.png'
+import imgThem_4 from '../../../images/theme-4.png'
+import imgSocial_1 from "../../../images/theme-1-socials.png"
+import imgSocial_2 from "../../../images/theme-2-socials.png"
+import { Helmet } from 'react-helmet';
+
+
 
 export default function Home() {
 
 
   const [showOverlay, setShowOverlay] = useState(false);
-  const [createAnOtherCard, setCreateAnOtherCard] = useState(false);
-    
+  const location = useLocation();
+
 
 
   let scrollTop = 0;
@@ -148,13 +157,13 @@ function handleScroll () {
       
       if (mainImg_1 !== null ) {
         if (scrollTop >= 120.800) {
-          mainImg_1.setAttribute('src', './images/theme-3.png');
+          mainImg_1.setAttribute('src', imgThem_3);
           mainImg_1.style.transform="rotateY(180deg)"
           // supImg_1.style.transform="rotateY(180deg)"
 
         } else {
 
-          mainImg_1.setAttribute('src', './images/theme-1.png');
+          mainImg_1.setAttribute('src', imgThem_1);
           mainImg_1.style.transform="rotateY(0deg)"
           // supImg_1.style.transform="rotateY(0deg)"
 
@@ -164,7 +173,7 @@ function handleScroll () {
 
 
         if  (scrollTop >= 298.2000) {
-          mainImg_1.setAttribute('src', './images/theme-1.png');
+          mainImg_1.setAttribute('src', imgThem_1);
           mainImg_1.style.transform="rotateY(0deg)"
           // supImg_1.style.transform="rotateY(0deg)"
 
@@ -177,13 +186,13 @@ function handleScroll () {
 
                       
                                 if (scrollTop >= 120.800 ) {
-                                  mainImg_2.setAttribute('src', './images/theme-4.png');
+                                  mainImg_2.setAttribute('src',imgThem_4 );
                                   mainImg_2.style.transform="rotateY(180deg)"
                                   // supImg_2.style.transform="rotateY(180deg)"
 
                                 } else {
 
-                                  mainImg_2.setAttribute('src', './images/theme-2.png');
+                                  mainImg_2.setAttribute('src',imgThem_2 );
                                   mainImg_2.style.transform="rotateY(0deg)"
                                   // supImg_2.style.transform="rotateY(0deg)"
 
@@ -192,7 +201,7 @@ function handleScroll () {
 
 
                                 if  (scrollTop >= 304.2000) {
-                                  mainImg_2.setAttribute('src', './images/theme-2.png');
+                                  mainImg_2.setAttribute('src', imgThem_2);
                                   mainImg_2.style.transform="rotateY(0deg)"
                                   // supImg_2.style.transform="rotateY(0deg)"
 
@@ -224,7 +233,6 @@ function handleScroll () {
 
         console.log('you are authenticated alredy ');
         setShowOverlay(true)
-        createAnOtherCard? navigate('/signUp', { state: { domainName: values.domainName } }):""
 
         
       }
@@ -238,8 +246,41 @@ function handleScroll () {
   });
 
 
+  useEffect(()=>{
+
+
+
+
+    console.log(location.pathname); // لطباعة المسار بدون علامة #
+    console.log(location.hash); // لطباعة الجزء المتعلق بالتوجيه القائم على التجزئة
+
+  },[])
+
   return (
     <>
+
+               <Helmet>
+                  <meta charSet="utf-8" />
+                  <title> Home </title>
+                      
+                  <meta name="description" content="Welcome to jecard. Explore our features, learn about our services, and stay updated with the latest bussins card. Join us today to enhance your experience with bussins card." />
+                      
+                      {/* إضافة كلمات مفتاحية */}
+                      <meta name="keywords" content="home, application home, home profiles , jecard home" />
+                      
+                      {/* إضافة مؤلف الصفحة */}
+                      <meta name="auther" content="Mohammed Morshidy , jecard " />
+                      
+                    
+                      
+                  
+              </Helmet>
+
+
+
+<div className='' >
+
+
 {showOverlay?<Overlay  >
 
 <div style={{background: "#d6d6d696"}} className= {`${styles.overLay} flex flex-col w-[30%] backdrop-blur-md  rounded-xl animate__animated animate__zoomInUp text-white `}>
@@ -256,13 +297,13 @@ function handleScroll () {
 
 
 
-<span className={` mt-2 block  ${styles.fontOverLay}`} > do you want to create <br /> a new  business card ?</span> </OverLayText>
+<span className={` mt-2 block  ${styles.fontOverLay}`} > Go to signUp to  <br /> create anOther one</span> </OverLayText>
 
 <div className={`flex justify-evenly mt-3 ${styles.parentButtons} `} >
   
-      <button onClick={()=>{ setShowOverlay(false) }} className={`w-[40%] py-2 bg-red-600 text-white rounded-lg ${styles.buttonOverLay} `} style={{background:"linear-gradient(to right, #afaea6 12%, #ff0000ab 75%)"}} > No </button>
+      <button onClick={()=>{ setShowOverlay(false) }} className={`w-[70%] py-2 bg-red-600 text-white rounded-lg ${styles.buttonOverLay} `} style={{background:"linear-gradient(to right, #afaea6 12%, #ff0000ab 75%)"}} > Close </button>
        
-        <button  onClick={(e)=>{
+        {/* <button  onClick={(e)=>{
           
           setShowOverlay(false)
           setCreateAnOtherCard(true)
@@ -270,7 +311,7 @@ function handleScroll () {
            formik.handleSubmit();
 
 
-        }} className= {` w-[40%] py-2 bg-green-600 text-white rounded-lg ${styles.buttonOverLay} `}  style={{background:"linear-gradient(to right, #31cdcd 12%, #74e274 80% )"}}  > Yes create one </button>
+        }} className= {` w-[40%] py-2 bg-green-600 text-white rounded-lg ${styles.buttonOverLay} `}  style={{background:"linear-gradient(to right, #31cdcd 12%, #74e274 80% )"}}  > Yes create one </button> */}
 
 </div>
 
@@ -278,9 +319,9 @@ function handleScroll () {
 
 </Overlay>:""}
 
-      <div className='pt-10 mt-36 d-flex justify-content-center flex-column align-items-center text-center '>
+      <div className='pt-10 mt-36 flex justify-content-center flex-column align-items-center text-center '>
         <p className='mb-0 mt-12'>Loved by 500,000+ creators</p>
-        <h1 className={`mb-5 ${styles.mainTitle}`}>Launch your site <br /> in seconds </h1>
+        <h1 className={`mb-5 ${styles.mainTitle}`}>Launch Digital card <br /> in seconds </h1>
         <div className={` ${styles.customInputContainer}`} style={styles_2.customInputContainer}>
           <div className={` ${styles.readonlyPart}`} style={styles_2.readonlyPart}>JeCard <span className='text-xl'>/</span></div>
           <input
@@ -297,32 +338,37 @@ function handleScroll () {
             onClick={(e) => { e.preventDefault(); formik.handleSubmit(); }}
             className={`submit-part font-blod text-2xl ${styles.submitPart}`}
             style={styles_2.submitPart}
-          >Claim my Link</div>
+          >Send</div>
         </div>
         {formik.touched.domainName && formik.errors.domainName ? (
           <div className=' text-red-500 px-3 py-2 mt-3 rounded-xl  ' >{formik.errors.domainName}</div>
         ) : formik.touched.domainName? <div className=' text-green-500 py-2 mt-3 rounded-xl  ' >success domain name <i className="fa-solid fa-circle-check ms-2 "></i> </div> :'' }
         <div className={`flex justify-between p-24 fixed z-[-1] ${styles.rotateCardParent}`}>
           <div id='rotateCard_1' className={`${styles.rotateCard_1} relative`}>
-            <img id='mainImg_1' src="./images/theme-1.png" alt="" className={`w-[100%] ${styles.img_1_rotateCard_1}`} />
-            {/* <img id='supImg_1' src="./images/jecard2.jpg" alt="" className={`w-[100%] h-20 rounded-xl absolute top-[80%] start-[60%] ${styles.img_2_rotateCard_1}`} /> */}
-            <img id='socialImg_1' src="./images/theme-1-socials.png" alt="" className={`w-[80%] h-12 rounded-xl absolute top-[17%] start-[-41%] ${styles.img_3_rotateCard_1}`} />
+            <img id='mainImg_1' src={imgThem_1}alt="" className={`w-[100%] ${styles.img_1_rotateCard_1}`} />
+            <img id='socialImg_1' src={imgSocial_1} alt="" className={`w-[80%] h-12 rounded-xl absolute top-[17%] start-[-41%] ${styles.img_3_rotateCard_1}`} />
           </div>
           <div id='rotateCard_2' className={`${styles.rotateCard_2} relative`}>
-            <img id='mainImg_2' src="./images/theme-2.png" alt="" className={`w-[100%] ${styles.img_1_rotateCard_2}`} />
-            {/* <img id='supImg_2' src="./images/jecard2.jpg" alt="" className={`w-[100%] h-20 rounded-xl absolute top-[80%] end-[60%] ${styles.img_2_rotateCard_2}`} /> */}
-            <img id='socialImg_1' src="./images/theme-2-socials.png" alt="" className={`w-[80%] h-12 rounded-xl absolute top-[17%] end-[-41%] ${styles.img_3_rotateCard_2}`} />
+            <img id='mainImg_2' src={imgThem_2} alt="" className={`w-[100%] ${styles.img_1_rotateCard_2}`} />
+            <img id='socialImg_1' src={imgSocial_2} alt="" className={`w-[80%] h-12 rounded-xl absolute top-[17%] end-[-41%] ${styles.img_3_rotateCard_2}`} />
           </div>
         </div>
       </div>
       <Features />
       <Creators />
       <AllCreators/>
-<div className='flex justify-center' ><hr className='w-[80%]' /></div>
-<div className='flex justify-center' >   <Footer /></div>
 
-{/* <iframe aria-controls='' width="560" height="315" src="//ok.ru/videoembed/6991802272382" frameBorder="0" allow="autoplay" allowFullScreen></iframe> */}
+
+
+<div className='flex justify-center' ><hr className='w-[80%]' /></div>
+<div className='flex justify-center' >   <Footer /></div> 
+
+
+
+</div>
+
 
     </>
   );
 }
+

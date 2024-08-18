@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from "react";
 import LoaderButtons from "../../components/LoaderButtons/LoaderButtons";
+import { Helmet } from "react-helmet";
 interface FormValues {
 
   email: string;
@@ -61,7 +62,30 @@ export default function ForgetPass() {
 
   return (
 
-<><div className="flex justify-center mt-36">
+<>
+
+<Helmet>
+
+        <meta charSet="utf-8" />
+        <title>Forgot Password - Reset Your Account</title>
+        {/* <link rel="canonical" href="http://mysite.com/forgot-password" /> */}
+
+        {/* وصف الصفحة */}
+        <meta name="description" content="Reset your account password quickly and securely. Enter your email to receive instructions on how to reset your password and regain access to your account." />
+        
+        {/* كلمات مفتاحية */}
+        <meta name="keywords" content="forgot password, reset password, account recovery, regain access, password help" />
+        
+        {/* معلومات إضافية للسيو */}
+        <meta name="author" content="jecard" />
+        <meta name="contact" content="Jihadae54@gmail.com" />
+        
+
+  
+</Helmet>
+
+
+<div className="flex justify-center mt-36">
 
 <div className=' flex justify-center pt-44 align-items-center flex-col w-[88%] sm:w-[50%]' >
 

@@ -1,7 +1,6 @@
 
 
-import { Link, useNavigate } from 'react-router-dom';
-import mainStyles from './Verify.module.css'
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
 /* HTML: <div class="loader"></div> */
@@ -10,6 +9,7 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import LoaderButtons from '../../components/LoaderButtons/LoaderButtons';
+import { Helmet } from 'react-helmet';
 interface FormValues {
 
 
@@ -113,6 +113,25 @@ const VerificationCode: React.FC = () => {
   return (
 
 <div className='mt-36' >
+
+        <Helmet>
+
+              <meta charSet="utf-8" />
+              <title>Verify Password Reset - Your Company Name</title>
+              {/* <link rel="canonical" href="http://mysite.com/verify-reset-password" /> */}
+
+              {/* وصف الصفحة */}
+              <meta name="description" content="Verify your password reset request by entering the verification code sent to your email. Follow the instructions to set a new password and regain access to your account." />
+              
+              {/* كلمات مفتاحية */}
+              <meta name="keywords" content="verify password reset, reset password verification, account recovery, password reset code, secure password reset" />
+              
+              {/* معلومات إضافية للسيو */}
+              <meta name="author" content="jecard" />
+              <meta name="contact" content="morshedy480@gmail.com" />
+              
+        
+      </Helmet>
 
 <form className="form" onSubmit={formik.handleSubmit}>
       <p className="title"> Verify and Reset Password </p>

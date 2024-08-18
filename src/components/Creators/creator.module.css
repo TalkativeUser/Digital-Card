@@ -21,3 +21,15 @@
     
 
 }
+
+
+@media (max-width:420px) {
+
+
+    .cratorsTitle {
+
+      font-size: 22px!important;
+    }
+
+
+    }

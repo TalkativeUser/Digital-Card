@@ -17,11 +17,21 @@ const styles_GooglePlay={
 
         <div className="socialIcons flex justify-center my-8  ">
 
-        <i className={`fa-brands fa-facebook  text-2xl ${styles.footerIcons}`}></i>
-        <i className= {`fa-brands fa-twitter  text-2xl ${styles.footerIcons}`} ></i>
-        <i className= {`fa-brands fa-tiktok  text-2xl ${styles.footerIcons}`} ></i>
-        <i className= {`fa-brands fa-square-instagram  text-2xl ${styles.footerIcons} `} ></i>
-       <Link className="text-black" target="_blank" to={'https://jecard.store/#'} > <i className= {`fa-solid fa-earth-africa  text-2xl ${styles.footerIcons} `} ></i></Link>
+      <Link target="_blank" to={`https://www.facebook.com/jecard26`} > <i className={`fa-brands fa-facebook text-black  text-2xl ${styles.footerIcons}`}></i></Link>
+      <Link target="_blank" to={`https://x.com/jecard_ae`} > <i className= {`fa-brands fa-twitter text-black  text-2xl ${styles.footerIcons}`} ></i></Link>
+      <Link target="_blank" to={`https://www.tiktok.com/@jecard_ae?_t=8ogQtETJpCa&_r=1`} > <i className= {`fa-brands fa-tiktok text-black  text-2xl ${styles.footerIcons}`} ></i></Link>
+      <Link target="_blank" to={`https://www.instagram.com/jecard_ae`} > <i className= {`fa-brands fa-square-instagram text-black  text-2xl ${styles.footerIcons} `} ></i> </Link>
+
+
+
+
+
+
+
+       
+       
+       
+        
         </div>
 
         <div className= {`flex justify-center my-8 ${styles.googlePlayAppStore} `} >

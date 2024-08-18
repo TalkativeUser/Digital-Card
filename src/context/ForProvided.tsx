@@ -37,7 +37,9 @@ interface IPropsForProvided {
   isUthenticated:boolean;
   setIsUthenticated:React.Dispatch<React.SetStateAction<boolean>>
   getAllCards:() => Promise<void>; 
-  handleSaveChangesButton:(values:FormInputsProps,linkUpdatedID:number|undefined) => Promise<void>; 
+  deleteAccount:() => Promise<void>; 
+  signOut:() => void; 
+  handleSaveChangesAddButton:(values:FormInputsProps,linkUpdatedID:number|undefined) => Promise<void>; 
   setLOADERforDetailsCard:React.Dispatch<React.SetStateAction<boolean>>
   LOADERforDetailsCard:boolean;
   setLayOut:React.Dispatch<React.SetStateAction<boolean>>
@@ -46,18 +48,29 @@ interface IPropsForProvided {
   layOut:boolean;
   firstCharInUserName:string;
   setFirstCharInUserName:React.Dispatch<React.SetStateAction<string>>
+  isAdmin:boolean;
+  setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface FormInputsProps {
   linkTitle: string
   link: string
 }
-interface IpropLink{
+export interface IpropLink{
 
   title:string,
   link:string,
   logo:string
   id?:number
+
+
+}
+interface IpropLinkPostData{
+
+  title:string,
+  link:string,
+  logo:string
+  card_id?:number
 
 
 }
@@ -90,10 +103,12 @@ export function ForProvided({ children }: any) {
   const [firstCharInUserName,setFirstCharInUserName]=useState('')
   const [layOut,setLayOut]=useState<boolean>(false)
   const [updateLayOut,setUpdateLayOut]=useState<boolean>(false)
+  const [isAdmin,setIsAdmin]=useState(false)
+  
 
   //  لودر التحميل بيحصله  true and false  فى الكمبوننت اللى انا فيه ده وكمان فى ال  setting dash  عشان وانا بضيف صوره بحتاج اعمل تحميل 
 
-  async function handleSaveChangesButton(values: FormInputsProps,linkUpdatedID:number|undefined) {
+  async function handleSaveChangesAddButton(values: FormInputsProps,linkUpdatedID:number|undefined) {
 
     console.log("link Update => " ,linkUpdatedID);
     
@@ -133,26 +148,33 @@ export function ForProvided({ children }: any) {
       } 
 
       else {
-
-
-        const response = await axios.post(`https://card.lixir-interiors.com/api/cards-link` , {
-          card_id:arrayOfCards[0].id ,
+        const requestData:IpropLinkPostData = {
           title: values.linkTitle,
-          link:link,
-          logo:choiesdIcon,
-        },
-      
-        {
-          headers: {
-            Authorization: `Bearer ${f_L_token}`, // تأكد من تعريف المتغير token في مكان ما في الكود
-          },
-        }
-      );
+          link: link,
+          logo: choiesdIcon,
+          card_id :arrayOfCards[0].id
+        };
+        
+        // if (arrayAllLinks&&arrayAllLinks.length != 0) {
+        //   requestData.card_id = arrayOfCards[0].id;
+        //   console.log('there is links alredy',arrayOfCards[0].id);
+          
+        // }
+        
+        const response = await axios.post(
+          'https://card.lixir-interiors.com/api/cards-link',
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${f_L_token}`, // تأكد من تعريف المتغير f_L_token في مكان ما في الكود
+            },
+          }
+        );
+        
         console.log('Response:', response.data);
-     
-        await getAllCards()
+        
+        await getAllCards();
         console.log('added link successfully ✅');
-  
       }
 
      
@@ -175,29 +197,32 @@ export function ForProvided({ children }: any) {
           'Authorization': `Bearer ${localStorage.getItem('f_L_token')}`
         }
       })
-      
+
+      if(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com') {
+
+        console.log('i am admin => ',response.data.email);
+        
+      } else {
+
+        console.log('i am normal user => ',response.data.email);
+        
+      }
+
+    setIsAdmin(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com'?true:false)
+
       setArrayOfCards(response.data.cards)
-      setProfileImage(response.data.cards[0].image)
+      setProfileImage(response.data.cards[0].image)  // هنفترض ان هنا مفيش كاردس خالص انت كده بقا بتجيب الصوره منين يا معلم المعلمين  وعرفنا مشكله الايميل اللى بتظهر فى السيتينج لان فعلا لو اول مره فعلا مفيش ايميل يتعرض
       setArrayAllLinks(response.data.cards[0].card_links)
-
       setFirstCharInUserName(response.data.name.charAt(0))
-      console.log();
-      
+      setLOADERforDetailsCard(false)
+      const { domin_name, name, email ,id } = response.data;
+      setUserData({  domin_name, user_name: name, email, id});
 
-      setTimeout(()=>{  setLOADERforDetailsCard(false)},0 )
 
 
-      const { domin_name, name, email } = response.data;
-      setUserData({
-        domin_name,
-        user_name: name,
-        email,
-      
-      });
-
-      console.log('All cards are =>', response.data);
-      console.log('user data => ', response.data.name, response.data.email, response.data.domin_name)
-  localStorage.setItem('yourDomain',`jecard/${response.data.domin_name}`)
+      console.log('All user data =>', response.data);
+      console.log('user data => ', response.data)
+  localStorage.setItem('yourDomain',response.data.domin_name)
 
     } catch (error) {
       setTimeout(()=>{  setLOADERforDetailsCard(false)},0 )
@@ -209,6 +234,50 @@ export function ForProvided({ children }: any) {
       }
     }
   };
+
+
+  async function deleteAccount () {
+
+
+    console.log('hello from delete account', userData.id);
+
+    
+    try {
+
+      const response = await axios.delete(
+        `https://card.lixir-interiors.com/api/delete-users/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${f_L_token}`
+          }
+        }
+      );
+            console.log(response);
+      signOut()
+      
+
+    } catch (error) {
+      console.log('error from delete account => ',error);
+      
+      
+    }
+
+  }
+
+  function signOut() {
+    console.log('you are not authenticated');
+    localStorage.removeItem('f_L_token');
+
+      setF_L_token(null);
+      setUserData(null);
+      setArrayOfCards(null);
+      setArrayAllLinks(null);
+      setFirstCharInUserName('');
+      setProfileImage(null);
+      setIsAdmin(false)
+     
+ 
+  }
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -225,12 +294,13 @@ export function ForProvided({ children }: any) {
 
   useEffect(() => {
 
-    console.log(choiesdIcon);
-    
+      
     const storedToken = localStorage.getItem('f_L_token');
     if (storedToken) {
       setF_L_token(storedToken);
       console.log('you are authenticated ');
+      console.log(`http://${window.location.host}/${localStorage.getItem('yourDomain')} `);
+      
       console.log(storedToken);
       
       
@@ -253,8 +323,8 @@ else {
                                  arrayAllLinks,setArrayAllLinks,arrayOfCards,setArrayOfCards,
                                  userData,setUserData,isUthenticated,setIsUthenticated,getAllCards,
                                  setLOADERforDetailsCard,LOADERforDetailsCard,firstCharInUserName,
-                                 setFirstCharInUserName,layOut,setLayOut,handleSaveChangesButton,
-                                 setUpdateLayOut,updateLayOut
+                                 setFirstCharInUserName,layOut,setLayOut,handleSaveChangesAddButton,
+                                 setUpdateLayOut,updateLayOut,deleteAccount,signOut,isAdmin,setIsAdmin
 
                                  }}>
       {children}
