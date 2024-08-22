@@ -102,8 +102,6 @@ import imgThem_4 from '../../../images/theme-4.png'
 import imgSocial_1 from "../../../images/theme-1-socials.png"
 import imgSocial_2 from "../../../images/theme-2-socials.png"
 import { Helmet } from 'react-helmet';
-import CoverCroppedImage from '../SettingsDash/CoverCroppedImage';
-import NewAppTest from '../SettingsDash/CoverCroppedImage';
 
 
 
@@ -360,7 +358,6 @@ function handleScroll () {
       <Creators />
       <AllCreators/>
 
-<CoverCroppedImage />
 
 <div className='flex justify-center' ><hr className='w-[80%]' /></div>
 <div className='flex justify-center' >   <Footer /></div> 

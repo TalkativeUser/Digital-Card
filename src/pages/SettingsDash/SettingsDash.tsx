@@ -249,7 +249,6 @@ export default function SettingsDash() {
   const [cropSize, setCropSize] = useState({ width: 240, height: 240 });
   const [croppedArea, setCroppedArea] = useState<Area | null>(null);
   const [showCroppedImage,setShowCroppedImage]=useState('')
-  const [showCropperComp,setShowCropperComp]=useState(false)
 
 
   const showCroppedImageMethod = async () => {
@@ -270,6 +269,8 @@ export default function SettingsDash() {
  
 
   const onCropComplete = ( croppedArea: Area,croppedAreaPixels: Area) => {
+    console.log(croppedArea);
+    
     setCroppedArea(croppedAreaPixels);
   };
 
