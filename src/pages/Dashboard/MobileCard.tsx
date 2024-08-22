@@ -214,7 +214,7 @@ export default function MobileCard({ width, height }: mobileCardIProps) {
                                               <img src={defImage} alt="Uploaded" className="h-60 w-[100%]" />
                                             </div>
                                           )}
-                                    
+                                   
                                     
                                     
                                     </>
@@ -269,7 +269,7 @@ export default function MobileCard({ width, height }: mobileCardIProps) {
             {userId ? 
 
                 <>
-                       {  userDataForVisitor ? <> {
+                       {  userDataForVisitor&&userDataForVisitor.length>0 ? <> {
 
 
 
@@ -295,7 +295,7 @@ export default function MobileCard({ width, height }: mobileCardIProps) {
 
                             );
 
-                          })  }    </> :<>      < p className='mt-14 text-center' >There is not any links</p>     </>
+                          })  }    </> :<>      < p className='mt-14 text-center text-black ' >There is not any links</p>     </>
 
 
 
