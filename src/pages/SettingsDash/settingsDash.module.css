@@ -25,7 +25,9 @@
   
   .imageContainer {
     position: relative;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
     width: 240px;
     height: 240px;

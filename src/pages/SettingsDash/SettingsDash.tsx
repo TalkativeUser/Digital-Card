@@ -387,65 +387,90 @@ export default function SettingsDash() {
                 wrapperClass="color-ring-wrapper"
                 colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
               />
-            ) : context?.profileImage && context.profileImage !== 'add-profile-bigger.jpg' ? (
+            ) :
+            
+            
+           
               <>
-                <div className={`flex justify-center items-center m-auto ${styles.imageContainer}`}>
 
-                  {
-                              imageURLdata?<div className="relative w-full h-60 bg-gray-900 overflow-hidden">
-                              <Cropper
-                                image={imageURLdata}
-                                crop={crop}
-                                zoom={zoom}
-                                aspect={4 / 3}
-                                onCropChange={setCrop}
-                                onCropComplete={onCropComplete}
-                                onZoomChange={setZoom}
-                                cropSize={cropSize}
-                                style={{
-                                  containerStyle: {
-                                    width: '100%',
-                                    height: '100%',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                  },
-                                  mediaStyle: {
-                                    margin: 'auto',
-                                  },
-                                }}
-                              />
-                            </div>:<img 
-                                 src={defaultImage} alt="Uploaded" className={`w-[180px]`} />
+               {    imageURLdata===undefined ||imageURLdata==='' ?
+                 <div className={styles.imageContainer}>
+                 <img src={defaultImage} alt="Uploaded" className={`w-[180px]`} />
+               </div>:
 
+                  <div className={`flex justify-center items-center m-auto ${styles.imageContainer}`}>
 
-                  }
-
-                  
-                       {
+                                    <div className="relative w-full h-60 bg-gray-900 overflow-hidden">
+                                          <Cropper
+                                            image={imageURLdata}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            aspect={4 / 3}
+                                            onCropChange={setCrop}
+                                            onCropComplete={onCropComplete}
+                                            onZoomChange={setZoom}
+                                            cropSize={cropSize}
+                                            style={{
+                                              containerStyle: {
+                                                width: '100%',
+                                                height: '100%',
+                                                position: 'relative',
+                                                overflow: 'hidden',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                              },
+                                              mediaStyle: {
+                                                margin: 'auto',
+                                              },
+                                            }}
+                                          />
+                                        </div>
 
 
-                              imageURLdata ? <>
-                              
-                              <span onClick={clearImageUrlData} className={styles.closeButton}><i className="fa-solid fa-xmark"></i></span>
-                              <span onClick={decreaseCropSize} className={`p-2 ${styles.decreasseBtn}`}>-</span>
-                              <span onClick={increaseCropSize} className={`p-2 ${styles.increesBtn}`}>+</span>
-                              <span onClick={showCroppedImageMethod} className={`p-2 ${styles.SaveBtn}`}><i className="fa-regular fa-floppy-disk"></i></span>
-                                          
-                              
-                              </>:""
-                       }
 
-             
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          {/* handle 4 icons on edit image  */}
+              {
+                      imageURLdata ? <>    
+                      <span onClick={clearImageUrlData} className={styles.closeButton}><i className="fa-solid fa-xmark"></i></span>
+                      <span onClick={decreaseCropSize} className={`p-2 ${styles.decreasseBtn}`}>-</span>
+                      <span onClick={increaseCropSize} className={`p-2 ${styles.increesBtn}`}>+</span>
+                      <span onClick={showCroppedImageMethod} className={`p-2 ${styles.SaveBtn}`}><i className="fa-regular fa-floppy-disk"></i></span>
+                                  
+                      
+                      </>:""
+              }
+
+
+                  </div>
+
+               }
+
               </>
-            ) : (
-              <div className={styles.imageContainer}>
-                <img src={defaultImage} alt="Uploaded" className={`w-[180px]`} />
-              </div>
-            )}
+             
+              }
+
+
+
+
+
+
+              
+                
+            
           </div>
           <div>
             <div className='flex flex-col'>
@@ -476,8 +501,13 @@ export default function SettingsDash() {
         <div className="dangerZone bg-white p-8 rounded-lg mt-8">
 
           <h5>Danger Zone</h5>
+          
           <p>Deleting your account permanently deletes your page and all your data</p>
-          <button className={`py-2 px-6 mt-2 border-red-600 border-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white ${styles.deleteAccount}`} onClick={context?.deleteAccount}>Delete this Account</button>
+         <div className='flex flex-col justify-center items-center ' >
+          <button className={`py-2 w-[80%] mt-2 border-red-600 border-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white ${styles.deleteAccount}`} onClick={()=>{context?.deleteAccount()}}>Delete user image</button>
+         <button className={`py-2 w-[80%] mt-2 border-red-600 border-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white ${styles.deleteAccount}`} onClick={()=>{context?.deleteAccount()}}>Delete this Account</button>
+        
+         </div>
         </div>
       </div>
     </div>

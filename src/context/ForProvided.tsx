@@ -198,6 +198,9 @@ export function ForProvided({ children }: any) {
         }
       })
 
+      console.log('response from get all cards ' , response.data);
+      
+
       if(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com' || response.data.email==='morshedy480@gmail.com') {
 
         console.log('i am admin => ',response.data.email);
@@ -282,9 +285,15 @@ export function ForProvided({ children }: any) {
   }
 
   useEffect(() => {
+
+
     const fetchCards = async () => {
+
+      if(localStorage.getItem('f_L_token'))
     
         await getAllCards();
+
+        else return
  
   
     }

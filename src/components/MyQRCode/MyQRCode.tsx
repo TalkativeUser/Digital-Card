@@ -1,11 +1,11 @@
 
 import { QRCodeCanvas } from 'qrcode.react';
-import {useContext, useRef } from 'react';
+import {useContext, useEffect, useRef } from 'react';
 import { cartContext } from '../../context/ForProvided';
 import { useParams } from 'react-router-dom';
 
 
-const QRCodeComponent = () => {
+const QRCodeComponent = ({linkQR}:any) => {
   const qrRef = useRef<HTMLDivElement>(null);
   const context=useContext(cartContext)
   let {userId}=useParams()
@@ -21,11 +21,21 @@ const QRCodeComponent = () => {
     }
   };
 
+
+  useEffect(()=>{
+
+
+     console.log(' QR Code link is => ',linkQR);
+     
+
+
+  },[linkQR])
+
   return (
     <div className='flex flex-col items-center'>
       <div ref={qrRef}>
         <QRCodeCanvas
-          value={`http://${window.location.host}/Digital-Card/#/digitalCard/${userId?userId: context?.userData&& context?.userData.id? context?.userData.id:""}`}
+          value={ linkQR?linkQR: `http://${window.location.host}/Digital-Card/#/digitalCard/${userId?userId: context?.userData&& context?.userData.id? context?.userData.id:""}`}
           size={130}
           bgColor="#ffffff"
           fgColor="#000000"

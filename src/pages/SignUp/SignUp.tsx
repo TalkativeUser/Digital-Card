@@ -88,6 +88,27 @@ export default function SignUp() {
     }
   }, [context, navigate]);
 
+
+  useEffect(()=>{
+    
+
+    if (context ) {
+
+        if ( context.isAdmin===false ) {
+            navigate('/home');
+        }
+     
+    }
+
+
+    console.log("context?.isAdmin => ",context?.isAdmin);
+
+
+},
+
+[context?.isAdmin])
+    
+
   return ( 
 
 

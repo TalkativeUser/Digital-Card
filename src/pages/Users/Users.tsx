@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MobileCard from '../Dashboard/MobileCard';
 import { useMediaQuery } from 'react-responsive';
 import { ColorRing, InfinitySpin } from 'react-loader-spinner';
+import QRCodeComponent from '../../components/MyQRCode/MyQRCode';
 
 export default function Users() {
 
@@ -13,6 +14,7 @@ export default function Users() {
     const context=useContext(cartContext)
     const [allUsersLoader,setAllUsersLoader]=useState(false)
     const navigate=useNavigate()
+    const [QRerror,setQRerror]=useState('')
       // تحديد عرض الشاشة أقل من 300 بكسل
   const isSmallScreen = useMediaQuery({ maxWidth: 299 });
   // تحديد القيم بناءً على عرض الشاشة
@@ -64,19 +66,48 @@ const handleDeleteAccount = async (userId: number) => {
 }
 
 
+const [linkQR, setLinkQR] = useState <any> (''); // استخدم useState لتخزين قيمة الـ input
 
-
+const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+  
+    // تحقق من أن الطول لا يقل عن 7 حروف
+    if (value.length < 7) {
+      setQRerror('Must be at least 7 characters.');
+      return;
+    }
+  
+    // تعبير منتظم بسيط للتحقق من أن القيمة إما URL أو رقم هاتف
+    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
+    const phonePattern = /^\d{7,14}$/;
+  
+    const isValidURL = urlPattern.test(value);
+    const isValidPhoneNumber = phonePattern.test(value);
+  
+    if (isValidPhoneNumber) {
+      // تحويل الرقم إلى رابط WhatsApp
+      const whatsappLink = `https://wa.me/${value}`;
+      setLinkQR(whatsappLink); // تحديث الرابط
+      setQRerror(''); // إزالة رسالة الخطأ
+      return;
+    }
+  
+    if (!isValidURL && !isValidPhoneNumber) {
+      setQRerror('Please enter a valid link or phone number.');
+      return;
+    }
+  
+    // إذا كانت القيمة صالحة، قم بتحديث الـ state وإزالة رسالة الخطأ
+    setLinkQR(value);
+    setQRerror('');
+  };
+  
+  
 
 
 useEffect(()=>{
     
-
-
-
     getAllUsers()
-
-
-    
 
     if (context ) {
 
@@ -94,6 +125,7 @@ useEffect(()=>{
 
 [context?.isAdmin])
     
+
 
 
 if(allUsersLoader )
@@ -151,8 +183,26 @@ if(allUsersLoader )
 
                 <div className='container mt-44 ' >
 
+
                 <h3 className='text-center' >All Users in our site</h3>
-                <ul className='mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center mx-0 px-0'>
+
+                    <div className='flex justify-center flex-col items-center ' >
+                    <input onChange={handleInputChange} type="text" 
+                    placeholder='gave me your link and take you QR code'
+                    className='w-[70%] border-1 px-3 my-3 m-auto py-2 border-black rounded-lg '  />
+
+                 {QRerror? <p className='text-red-500' >{QRerror}</p>:"" }
+
+
+                    {linkQR && QRerror===''?  <QRCodeComponent  linkQR={linkQR} />:"" }
+                                                                                        
+
+                    </div>
+
+
+
+
+                <ul className='mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center mx-0 px-0'>
                     
                     {allUsers&&allUsers?.length > 0 ? <>
                     
