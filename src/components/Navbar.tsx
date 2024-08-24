@@ -147,6 +147,12 @@ export default function Navbar() {
             >
               FAQ
             </NavLink>
+            <NavLink
+              to="/users"
+              className={({ isActive }) => isActive ? `text-decoration-none block rounded-md px-3 py-2 font-bold text-xl text-black ${styles.activeClass}`  : "text-decoration-none block rounded-md px-3 py-2 font-bold text-xl text-[#0fd2c7]"}
+            >
+              Users
+            </NavLink>
             {context?.f_L_token ? (
               <>
                 <div onClick={context?.signOut} className="text-decoration-none block rounded-md px-3 py-2 font-bold text-xl text-[#0fd2c7] cursor-pointer">Sign Out</div>

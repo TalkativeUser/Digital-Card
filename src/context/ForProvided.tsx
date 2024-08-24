@@ -37,7 +37,7 @@ interface IPropsForProvided {
   isUthenticated:boolean;
   setIsUthenticated:React.Dispatch<React.SetStateAction<boolean>>
   getAllCards:() => Promise<void>; 
-  deleteAccount:() => Promise<void>; 
+  deleteAccount:( deleteIdFromAllUsers?:number) => Promise<void>; 
   signOut:() => void; 
   handleSaveChangesAddButton:(values:FormInputsProps,linkUpdatedID:number|undefined) => Promise<void>; 
   setLOADERforDetailsCard:React.Dispatch<React.SetStateAction<boolean>>
@@ -48,8 +48,8 @@ interface IPropsForProvided {
   layOut:boolean;
   firstCharInUserName:string;
   setFirstCharInUserName:React.Dispatch<React.SetStateAction<string>>
-  isAdmin:boolean;
-  setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>
+  isAdmin:null| boolean;
+  setIsAdmin:React.Dispatch<React.SetStateAction<null | boolean> >
 }
 
 interface FormInputsProps {
@@ -103,7 +103,7 @@ export function ForProvided({ children }: any) {
   const [firstCharInUserName,setFirstCharInUserName]=useState('')
   const [layOut,setLayOut]=useState<boolean>(false)
   const [updateLayOut,setUpdateLayOut]=useState<boolean>(false)
-  const [isAdmin,setIsAdmin]=useState(false)
+  const [isAdmin,setIsAdmin]=useState<null | boolean> (null)
   
 
   //  لودر التحميل بيحصله  true and false  فى الكمبوننت اللى انا فيه ده وكمان فى ال  setting dash  عشان وانا بضيف صوره بحتاج اعمل تحميل 
@@ -198,17 +198,20 @@ export function ForProvided({ children }: any) {
         }
       })
 
-      if(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com') {
+      if(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com' || response.data.email==='morshedy480@gmail.com') {
 
         console.log('i am admin => ',response.data.email);
+        setIsAdmin(true)
         
       } else {
-
         console.log('i am normal user => ',response.data.email);
+
+        setIsAdmin(false)
+
         
       }
 
-    setIsAdmin(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com'?true:false)
+   
 
       setArrayOfCards(response.data.cards)
       setProfileImage(response.data.cards[0].image)  // هنفترض ان هنا مفيش كاردس خالص انت كده بقا بتجيب الصوره منين يا معلم المعلمين  وعرفنا مشكله الايميل اللى بتظهر فى السيتينج لان فعلا لو اول مره فعلا مفيش ايميل يتعرض
@@ -219,9 +222,6 @@ export function ForProvided({ children }: any) {
       setUserData({  domin_name, user_name: name, email, id});
 
 
-
-      console.log('All user data =>', response.data);
-      console.log('user data => ', response.data)
   localStorage.setItem('yourDomain',response.data.domin_name)
 
     } catch (error) {
@@ -236,7 +236,7 @@ export function ForProvided({ children }: any) {
   };
 
 
-  async function deleteAccount () {
+  async function deleteAccount (deleteIdFromAllUsers?:number) {
 
 
     console.log('hello from delete account', userData.id);
@@ -245,7 +245,7 @@ export function ForProvided({ children }: any) {
     try {
 
       const response = await axios.delete(
-        `https://card.lixir-interiors.com/api/delete-users/${userData.id}`,
+        `https://card.lixir-interiors.com/api/delete-users/${ deleteIdFromAllUsers ?deleteIdFromAllUsers:userData.id }`,
         {
           headers: {
             Authorization: `Bearer ${f_L_token}`
@@ -253,7 +253,9 @@ export function ForProvided({ children }: any) {
         }
       );
             console.log(response);
-      signOut()
+
+            !deleteIdFromAllUsers?signOut():""
+      
       
 
     } catch (error) {
@@ -291,6 +293,14 @@ export function ForProvided({ children }: any) {
 
   }, []); 
 
+
+  useEffect(()=> {
+
+
+    console.log("context?.isAdmin => ",isAdmin);
+
+
+  },[isAdmin])
 
   useEffect(() => {
 
