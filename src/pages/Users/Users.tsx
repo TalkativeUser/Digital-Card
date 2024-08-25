@@ -5,7 +5,7 @@ import {Helmet} from "react-helmet";
 import { useNavigate } from 'react-router-dom';
 import MobileCard from '../Dashboard/MobileCard';
 import { useMediaQuery } from 'react-responsive';
-import { ColorRing, InfinitySpin } from 'react-loader-spinner';
+import { ColorRing } from 'react-loader-spinner';
 import QRCodeComponent from '../../components/MyQRCode/MyQRCode';
 
 export default function Users() {

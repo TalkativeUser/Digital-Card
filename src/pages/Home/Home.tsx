@@ -356,10 +356,10 @@ function handleScroll () {
       </div>
       <Features />
       <Creators />
-      <AllCreators/>
+      {/* <AllCreators/> */}
 
 
-<div className='flex justify-center' ><hr className='w-[80%]' /></div>
+<div className='flex justify-center mt-96 ' ><hr className='w-[80%]' /></div>
 <div className='flex justify-center' >   <Footer /></div> 
 
 

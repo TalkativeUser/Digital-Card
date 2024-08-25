@@ -127,3 +127,94 @@
       opacity: 0;
     }
   }
+
+  .virefyAdminButton{
+
+padding-inline:12px;
+position: absolute;
+top: 0px;
+bottom: 0px;
+right: 0px;
+background-color:#12ff0045 ;
+font-size: 19px;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+  }
+
+  .virefyAdminINPut:focus {
+
+  border: none;
+  outline: none;
+
+  }
+ 
+
+
+  @media (max-width : 930px) {
+
+    .CovervirefyAdminButton {
+
+      width: 65% !important;
+    }
+    
+  }
+  @media (max-width : 700px) {
+
+    .CovervirefyAdminButton {
+
+      width: 70% !important;
+    }
+    
+  }
+  @media (max-width : 580px) {
+
+    .CovervirefyAdminButton {
+
+      width: 70% !important;
+    }
+    
+  }
+  @media (max-width : 500px) {
+
+    .CovervirefyAdminButton {
+
+      width: 80% !important;
+    }
+
+    .virefyAdminButton {
+
+      font-size: small;
+      padding-inline:5px ;
+    }
+
+
+
+
+    
+  }
+  @media (max-width : 500px) {
+
+    .CovervirefyAdminButton {
+
+      width: 90% !important;
+    }
+ 
+  }
+  @media (max-width : 340px) {
+
+    .CovervirefyAdminButton {
+
+      width: 95% !important;
+    }
+
+    .virefyAdminButton {
+
+      font-size:13px;
+      padding-inline:2px ;
+    }
+
+
+
+
+    
+  }

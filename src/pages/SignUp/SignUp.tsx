@@ -5,7 +5,7 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './SignUp.css';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { cartContext } from '../../context/ForProvided';
 import { Helmet } from 'react-helmet';
 
@@ -28,6 +28,10 @@ export default function SignUp() {
   const domainName = state?.domainName || '';
   const [isError,setIsError]=useState<string> ()
   const context =useContext(cartContext)
+  const [Admin,setAdmin]=useState<boolean> (false)
+  const adminInputRef=useRef <HTMLInputElement> (null)
+const [errorAdmin,setErrorAdmin]=useState<string> ('')
+
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -80,6 +84,32 @@ export default function SignUp() {
   });
 
 
+ function handleIsAdmin () {
+
+
+  if (adminInputRef&&adminInputRef.current ) {
+
+        if( adminInputRef.current.value === "Jihadae54@gmail.com" ||  adminInputRef.current.value === "Jeolord37@gmail.com" || adminInputRef.current.value === "morshedy480@gmail.com" ) {
+
+
+          setAdmin(true)
+          setErrorAdmin('')
+        }
+
+        else {
+
+          setAdmin(false)
+          setErrorAdmin('You are not Admin , Only admins can create a digital card')
+        }
+
+
+  }
+
+
+
+
+ }
+
   useEffect(() => {
     if (context?.f_L_token) {
 
@@ -89,24 +119,24 @@ export default function SignUp() {
   }, [context, navigate]);
 
 
-  useEffect(()=>{
+//   useEffect(()=>{
     
 
-    if (context ) {
+//     if (context ) {
 
-        if ( context.isAdmin===false ) {
-            navigate('/home');
-        }
+//         if ( context.isAdmin===false ) {
+//             navigate('/home');
+//         }
      
-    }
+//     }
 
 
-    console.log("context?.isAdmin => ",context?.isAdmin);
+//     console.log("context?.isAdmin => ",context?.isAdmin);
 
 
-},
+// },
 
-[context?.isAdmin])
+// [context?.isAdmin])
     
 
   return ( 
@@ -130,7 +160,11 @@ export default function SignUp() {
 
         </Helmet>
         
-<form className="form mt-36 " onSubmit={formik.handleSubmit}>
+
+
+    { Admin?
+    
+   <form className="form mt-36 " onSubmit={formik.handleSubmit}>
       <p className="title">Register</p>
       <p className="message">Signup now and get full access to our app.</p>
 
@@ -214,26 +248,7 @@ export default function SignUp() {
           </div>
         ) : null}
       </label>
-      {/* <label>
-        {formik.touched.confirmPassword && !formik.errors.confirmPassword ? (
-          <div className="text-green-500 py-2 mt-3 rounded-xl absolute top-[-10px] end-0">
-            <i className="fa-solid fa-circle-check ms-2"></i>
-          </div>
-        ) : ""}
-        <input
-          required
-          placeholder="Re password"
-          type="password"
-          className="input"
-          {...formik.getFieldProps('confirmPassword')}
-        />
-        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-          <div className="error text-red-500 px-3 py-2 mt-3 rounded-xl">
-            {formik.errors.confirmPassword}
-            <i className="fa-solid fa-bug ms-2"></i>
-          </div>
-        ) : null}
-      </label> */}
+     
 <div className='flex justify-between items-center ' >
 <span className='ms-3 text-red-500' >{isError}</span>
 <button type="submit" className="submit w-32 mt-2">Sign Up</button>
@@ -242,7 +257,42 @@ export default function SignUp() {
       <p className="signin text-xl">
         Already have an account? <Link to={'/login'} className="no-underline text-decoration-none">Login</Link>
       </p>
-    </form>
+    </form> :
+
+
+              <div className='fixed inset-0  flex justify-center items-center flex-col ' > 
+
+
+                      <div className={ ` CovervirefyAdminButton w-[50%] p-[2px] rounded-xl flex  justify-center items-center`}   style={{background: 'linear-gradient(to right, rgb(0 211 211) 12%, rgb(50 184 50 / 72%))' }}>
+
+                                    <div 
+                                        className='w-[100%] flex justify-center items-center relative rounded-xl overflow-hidden  ' >
+                                        <input ref={adminInputRef}  type="email" name="email" className='p-2.5  virefyAdminINPut w-[100%] bg-white text-black' />
+                                        <button onClick={handleIsAdmin}  className='virefyAdminButton  ' > Verify Admin ? </button>
+
+                                    </div>
+                                     
+                                    
+
+
+                      </div>
+
+
+                      {errorAdmin? <p className='text-red-800' >{errorAdmin}</p>:""}
+
+                      
+
+
+
+            </div>
+
+
+  }
+
+
+    
+
+    
 </>    
   );
 }
