@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { cartContext } from '../../context/ForProvided';
 import { Helmet } from 'react-helmet';
+import { Bars } from 'react-loader-spinner';
 
 interface FormValues {
   email: string;
@@ -163,8 +164,16 @@ export default function Login() {
           </button>
 
         </div> */}
-        <button type="submit" className="button-submit" disabled={formik.isSubmitting}>
-          {formik.isSubmitting ? 'Loading...' : 'Sign In'}
+        <button type="submit" className="button-submit flex justify-center items-center" disabled={formik.isSubmitting}>
+          {formik.isSubmitting ? <Bars
+                height="30"
+                width="80"
+                color="white"
+                ariaLabel="bars-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                /> :'Sign In' }
         </button>
         {apiError && <div className="error text-red-500 px-3 py-2 mt-3 rounded-xl">{apiError}</div>}
         <div className="forgetPass ms-auto me-3 mt-2">

@@ -141,6 +141,10 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
   }
 
+  .virefyAdminButton:active {
+    background-color: #12ff0087;/* اللون الذي يظهر عند الضغط */
+}
+
   .virefyAdminINPut:focus {
 
   border: none;

@@ -8,6 +8,7 @@ import './SignUp.css';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { cartContext } from '../../context/ForProvided';
 import { Helmet } from 'react-helmet';
+import { Bars } from 'react-loader-spinner';
 
 interface FormValues {
   domin_name: string;
@@ -41,33 +42,45 @@ const [errorAdmin,setErrorAdmin]=useState<string> ('')
       password: '',
       // confirmPassword: '',
     },
+    
+    
     validationSchema: Yup.object({
       domin_name: Yup.string()
-        .min(6, 'Must be at least 6 characters')
+        .trim() // لإزالة المسافات الزائدة من البداية والنهاية
+        .matches(/^\S*$/, 'Must not contain spaces') // يمنع وجود أي مسافات داخل النص
+        .min(3, 'Must be at least 3 characters')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
       name: Yup.string()
-        .required('Required')
-        .min(6, 'Must be at least 6 characters')
-        .max(30, 'Must be 30 characters or less'),
+        .trim()
+        .matches(/^\S*$/, 'Must not contain spaces')
+        .min(3, 'Must be at least 3 characters')
+        .max(30, 'Must be 30 characters or less')
+        .required('Required'),
       email: Yup.string()
-        .required('Required')
+        .trim()
         .matches(
           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
           'Invalid email address. Please use a valid email format like user@example.com'
-        ),
+        )
+        .required('Required'),
       password: Yup.string()
-        .required('Required')
+        .trim()
+        .matches(/^\S*$/, 'Must not contain spaces')
         .min(6, 'Must be at least 6 characters')
         .max(30, 'Must be 30 characters or less')
         .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
         .matches(/[a-z]/, 'Must contain at least one lowercase letter')
         .matches(/\d/, 'Must contain at least one number')
         .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must contain at least one special character')
+        .required('Required'),
       // confirmPassword: Yup.string()
       //   .oneOf([Yup.ref('password')], 'Passwords must match')
       //   .required('Required'),
-    }),
+    })
+    
+    
+    ,
     onSubmit: async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
       try {
         const response = await axios.post('https://card.lixir-interiors.com/api/register', values );
@@ -250,8 +263,23 @@ const [errorAdmin,setErrorAdmin]=useState<string> ('')
       </label>
      
 <div className='flex justify-between items-center ' >
-<span className='ms-3 text-red-500' >{isError}</span>
-<button type="submit" className="submit w-32 mt-2">Sign Up</button>
+           <span className='ms-3 text-red-500' >{isError}</span>
+          <button type="submit" className="submit w-32 mt-2 flex justify-center items-center "> 
+            
+            
+            
+          {formik.isSubmitting ? <Bars
+                height="30"
+                width="50"
+                color="white"
+                ariaLabel="bars-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                /> :'Sign Up' }
+            
+            
+             </button>
   </div>     
     
       <p className="signin text-xl">
@@ -267,7 +295,9 @@ const [errorAdmin,setErrorAdmin]=useState<string> ('')
 
                                     <div 
                                         className='w-[100%] flex justify-center items-center relative rounded-xl overflow-hidden  ' >
-                                        <input ref={adminInputRef}  type="email" name="email" className='p-2.5  virefyAdminINPut w-[100%] bg-white text-black' />
+                                        <input ref={adminInputRef}  type="email"
+                                           placeholder='Enter admin email if you admin'
+                                          name="email" className='p-2.5  virefyAdminINPut w-[100%] bg-white text-black' />
                                         <button onClick={handleIsAdmin}  className='virefyAdminButton  ' > Verify Admin ? </button>
 
                                     </div>

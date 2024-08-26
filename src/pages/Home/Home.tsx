@@ -4,9 +4,9 @@ import styles from './Home.module.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import AllCreators from '../../components/AllCreators/AllCreators';
+// import AllCreators from '../../components/AllCreators/AllCreators';
 import Footer from '../../components/Footer/Footer';
-
+import jeCard_bg_transparent from '../../../images/jecard_bg_trans.png'
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -320,8 +320,11 @@ function handleScroll () {
 </Overlay>:""}
 
       <div className='pt-10 mt-36 flex justify-content-center flex-column align-items-center text-center '>
-        <p className='mb-0 mt-12'>Loved by 500,000+ creators</p>
-        <h1 className={`mb-5 ${styles.mainTitle}`}>Launch Digital card <br /> in seconds </h1>
+         
+        <img src={jeCard_bg_transparent} className={styles.jeCardLogo}   alt="" />
+
+
+        <h1 className={`mb-3 ${styles.mainTitle}`}>  <span style={{ fontFamily: '"Mingzat", sans-serif' }}>Jecard</span> <br/>  Launch Digital card <br /> in seconds </h1>
         <div className={` ${styles.customInputContainer}`} style={styles_2.customInputContainer}>
           <div className={` ${styles.readonlyPart}`} style={styles_2.readonlyPart}>JeCard <span className='text-xl'>/</span></div>
           <input
@@ -359,8 +362,8 @@ function handleScroll () {
       {/* <AllCreators/> */}
 
 
-<div className='flex justify-center mt-96 ' ><hr className='w-[80%]' /></div>
-<div className='flex justify-center' >   <Footer /></div> 
+<div className='flex justify-center mt-64 ' ><hr className='w-[80%]' /></div>
+<div className='flex justify-center mb-2 ' >   <Footer /></div> 
 
 
 

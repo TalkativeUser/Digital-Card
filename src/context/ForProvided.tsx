@@ -199,7 +199,7 @@ export function ForProvided({ children }: any) {
       })
 
       console.log('response from get all cards ' , response.data);
-      
+  
 
       if(response.data.email==='Jihadae54@gmail.com' || response.data.email==='Jeolord37@gmail.com' || response.data.email==='morshedy480@gmail.com') {
 

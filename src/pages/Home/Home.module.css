@@ -55,6 +55,12 @@
   display: none;
 }
 
+.jeCardLogo {
+
+  width: 160px;
+  height: 160px;
+}
+
 @media (max-width: 842px) {
 
 
@@ -62,6 +68,12 @@
 
   font-weight: 600;
   font-size: 50px;
+}
+
+.jeCardLogo {
+
+  width: 145px;
+  height: 135px;
 }
 
 }
@@ -74,6 +86,16 @@
   font-size: 42px;
 }
 
+
+.jeCardLogo {
+
+  width: 135px;
+  height: 125px;
+}
+
+
+
+
 }
 @media (max-width: 558px) {
 
@@ -82,6 +104,12 @@
 
   font-weight: 500;
   font-size: 32px;
+}
+
+.jeCardLogo {
+
+  width: 120px;
+  height: 110px;
 }
 
 }
@@ -94,6 +122,11 @@
   font-size: 25px;
 }
 
+.jeCardLogo {
+
+  width: 110px;
+  height: 100px;
+}
 /* these styles for input in the home page */
 
 }
@@ -123,6 +156,12 @@ width: 300px!important;
   padding: 5px;
 }
 
+.jeCardLogo {
+
+  width: 90px;
+  height: 80px;
+}
+
 }
 @media (max-width: 322px) {
 
@@ -130,6 +169,17 @@ width: 300px!important;
 
 width: 230px!important;  
       }
+ 
+
+
+}
+@media (max-width: 300px) {
+
+  .jeCardLogo {
+
+    width: 70px;
+    height: 65px;
+  }
  
 
 
@@ -207,6 +257,8 @@ width: 38% !important;
 width: 49% !important;
 
 }
+
+
   
  }
   

@@ -154,21 +154,23 @@ export default function MobileCard({ width, height ,userDataFromAllUsers }: mobi
   className={`rounded-3xl overflow-y-auto flex flex-col gap-0 relative bg-green-800  ${styles.mobileStyles}`}
 >
 
-  <i
-    className={`fa-solid fa-arrow-up-from-bracket absolute text-xl top-[13px] left-[13px] cursor-pointer`}
-    onClick={() => {
-      context?.setQRcodeMobileMode(true);
-    }}
-    style={{
-      
-     color: userId&&userDataForVisitor?  userDataForVisitor.cards&&userDataForVisitor.cards[0]?userDataForVisitor.cards[0].share_color :""
+ {userDataFromAllUsers ?"":
+ 
+ <i
+ className={`fa-solid fa-arrow-up-from-bracket absolute text-xl top-[13px] left-[13px] cursor-pointer`}
+ onClick={() => {
+   context?.setQRcodeMobileMode(true);
+ }}
+ style={{
+   
+  color: userId&&userDataForVisitor?  userDataForVisitor.cards&&userDataForVisitor.cards[0]?userDataForVisitor.cards[0].share_color :""
 
-           :userDataFromAllUsers? userDataFromAllUsers.cards&&userDataFromAllUsers.cards[0]?userDataFromAllUsers.cards[0].share_color :""
-          
-      :context?.arrayOfCards&&context?.arrayOfCards[0]?context?.arrayOfCards[0].share_color:""            
-    
-    }}
-  ></i>
+        :userDataFromAllUsers? userDataFromAllUsers.cards&&userDataFromAllUsers.cards[0]?userDataFromAllUsers.cards[0].share_color :""
+       
+   :context?.arrayOfCards&&context?.arrayOfCards[0]?context?.arrayOfCards[0].share_color:""            
+ 
+ }}
+></i>}
 
   {context?.QRcodeMobileMode ? (
     <div className={`absolute z-10 top-8 left-8`}>
