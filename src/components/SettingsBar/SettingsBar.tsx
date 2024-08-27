@@ -1,5 +1,5 @@
 import  { useContext, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './SettingsBar.module.css';
 import { cartContext } from '../../context/ForProvided';
 import QRCodeComponent from '../MyQRCode/MyQRCode';
@@ -20,7 +20,7 @@ const navStyles = {
 export default function SettingsBarMoreTop() {
   const ulRef = useRef<HTMLUListElement>(null);
   const context =useContext(cartContext)
-
+const navigate =useNavigate()
   const [isCopied, setCopied] = useClipboard( `http://${window.location.host}/Digital-Card/#/digitalCard/${context?.userData&& context?.userData.id? context?.userData.id:""}`, {
     successDuration: 2000, 
   });
@@ -54,6 +54,7 @@ export default function SettingsBarMoreTop() {
     } else {
 
       console.log( 'there is not context.userData.id');
+      navigate('/home')
       
     }
 

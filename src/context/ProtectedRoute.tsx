@@ -8,8 +8,9 @@ interface ReactProtectedProps {
 
 export default function ProtectedRoute({children}:ReactProtectedProps) {
   const context = useContext(cartContext);
+  
 
-  if (!context) {
+  if (!context ) {
 
     console.log(` context is false`);
     
@@ -18,7 +19,7 @@ export default function ProtectedRoute({children}:ReactProtectedProps) {
 
   // handle sign up routing
 
-  if (localStorage.getItem('f_L_token') === null) {
+  if (localStorage.getItem('f_L_token') === null  ) {
 
     console.log(` Token is null`);
 

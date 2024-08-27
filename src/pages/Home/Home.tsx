@@ -89,9 +89,11 @@ const styles_2 = {
 
 const validationSchema = Yup.object({
   domainName: Yup.string()
+    .transform((value) => value.trim()) // إزالة المسافات الفارغة من البداية والنهاية
     .min(6, 'The name must be more than 6 letters')
     .max(30, 'The name must be less than 30 letters')
-    .required('This field is required'),
+    .required('This field is required')
+    .test('no-empty-spaces', 'Domain name cannot be only spaces', (value) => value.trim().length > 0) // التحقق من أن الحقل ليس عبارة عن مسافات فارغة فقط
 });
 
 
@@ -361,8 +363,15 @@ function handleScroll () {
       <Creators />
       {/* <AllCreators/> */}
 
+<div className='flex justify-center items-center flex-col ' >
 
-<div className='flex justify-center mt-64 ' ><hr className='w-[80%]' /></div>
+      <img src={jeCard_bg_transparent} className={styles.jeCardLogo}   alt="" />
+      <h1  style={{ fontFamily: '"Mingzat", sans-serif' }} className={`mb-3 ${styles.mainTitle}`}>  Jecard  </h1>
+
+</div>
+
+
+<div className='flex justify-center mt-12 ' ><hr className='w-[80%]' /></div>
 <div className='flex justify-center mb-2 ' >   <Footer /></div> 
 
 
